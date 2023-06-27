@@ -1,0 +1,197 @@
+﻿<Window
+    x:Class="CourseWork.AddWarriorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CourseWork"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Додавання нового бійця до батальйону"
+    Width="420"
+    Height="420"
+    MinWidth="420"
+    MinHeight="420"
+    MaxWidth="420"
+    MaxHeight="420"
+    Closing="AddWarriorWindow_OnClosing"
+    Icon="/Icons/add warrior icon.png"
+    mc:Ignorable="d">
+    <Window.Background>
+        <ImageBrush ImageSource="/Icons/camo.jpg" Stretch="Fill" />
+    </Window.Background>
+    <StackPanel>
+        <Label
+            x:Name="titleLabel"
+            Width="300"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            FontSize="25"
+            Foreground="Khaki">
+            Новий боєць
+        </Label>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Width="90"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="Khaki">
+                Прізвище* :
+            </Label>
+            <TextBox
+                x:Name="surnameBox"
+                Width="150"
+                Height="20"
+                MaxLength="32">
+                <TextBox.ContextMenu>
+                    <ContextMenu FontStyle="Italic">
+                        <MenuItem Command="Copy" Header="Копіювати " />
+                        <MenuItem Command="Paste" Header="Вставити" />
+                        <MenuItem Command="Cut" Header="Вирізати" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </StackPanel>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Width="50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="Khaki">
+                Ім'я* :
+            </Label>
+            <TextBox
+                x:Name="nameBox"
+                Width="150"
+                Height="20"
+                MaxLength="32">
+                <TextBox.ContextMenu>
+                    <ContextMenu FontStyle="Italic">
+                        <MenuItem Command="Copy" Header="Копіювати " />
+                        <MenuItem Command="Paste" Header="Вставити" />
+                        <MenuItem Command="Cut" Header="Вирізати" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </StackPanel>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Width="45"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="Khaki">
+                Вік* :
+            </Label>
+            <TextBox
+                x:Name="ageBox"
+                Width="30"
+                Height="20"
+                MaxLength="2"
+                PreviewTextInput="AgeBox_OnPreviewTextInput">
+                <TextBox.ContextMenu>
+                    <ContextMenu FontStyle="Italic">
+                        <MenuItem Command="Copy" Header="Копіювати " />
+                        <MenuItem Command="Paste" Header="Вставити" />
+                        <MenuItem Command="Cut" Header="Вирізати" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </StackPanel>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Width="105"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="Khaki">
+                Група крові* :
+            </Label>
+            <ComboBox
+                x:Name="bloodGroupsBox"
+                Width="50"
+                Height="25">
+                <ComboBoxItem Content="I-" IsSelected="True" />
+                <ComboBoxItem Content="I+" />
+                <ComboBoxItem Content="II-" />
+                <ComboBoxItem Content="II+" />
+                <ComboBoxItem Content="III-" />
+                <ComboBoxItem Content="III+" />
+                <ComboBoxItem Content="IV-" />
+                <ComboBoxItem Content="ІV+" />
+            </ComboBox>
+        </StackPanel>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Width="75"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="Khaki">
+                Звання*:
+            </Label>
+            <ComboBox
+                x:Name="ranksBox"
+                Width="110"
+                Height="25">
+                <ComboBoxItem Content="Рекрут" IsSelected="True" />
+                <ComboBoxItem Content="Солдат" />
+                <ComboBoxItem Content="Сержант" />
+                <ComboBoxItem Content="Лейтенант" />
+                <ComboBoxItem Content="Капітан" />
+                <ComboBoxItem Content="Майор" />
+                <ComboBoxItem Content="Підполковник" />
+            </ComboBox>
+        </StackPanel>
+        <StackPanel
+            Margin="10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Width="105"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="Khaki">
+                Боєкомплект:
+            </Label>
+            <TextBox
+                x:Name="ammoBox"
+                Width="150"
+                Height="20"
+                MaxLength="32">
+                <TextBox.ContextMenu>
+                    <ContextMenu FontStyle="Italic">
+                        <MenuItem Command="Copy" Header="Копіювати " />
+                        <MenuItem Command="Paste" Header="Вставити" />
+                        <MenuItem Command="Cut" Header="Вирізати" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </StackPanel>
+        <Button
+            x:Name="addButton"
+            Width="100"
+            Height="30"
+            Click="AddButton_OnClick"
+            FontSize="18">
+            Додати
+        </Button>
+    </StackPanel>
+</Window>

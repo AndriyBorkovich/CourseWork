@@ -1,0 +1,308 @@
+﻿<Window
+    Closing="MainWindow_OnClosing"
+    Height="533"
+    Icon="/Icons/window icon.png"
+    MaxHeight="533"
+    MaxWidth="1000"
+    MinHeight="533"
+    MinWidth="1000"
+    Title="Батальйон"
+    Width="1000"
+    mc:Ignorable="d"
+    x:Class="CourseWork.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CourseWork"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Window.Resources>
+        <CollectionViewSource CollectionViewType="ListCollectionView" x:Key="ItemCollectionViewSource" />
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/Icons/camo.jpg" Stretch="Fill" />
+    </Window.Background>
+    <Window.DataContext>
+        <local:Warrior />
+    </Window.DataContext>
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="ReadFromFile_OnClick" />
+        <CommandBinding Command="SaveAs" Executed="MiWriteToFile_OnClick" />
+        <CommandBinding Command="Replace" Executed="MiSortByRank_OnClick" />
+        <CommandBinding Command="MoveToEnd" Executed="MiAddWarrior_OnClick" />
+        <CommandBinding CanExecute="CommandBinding_OnCanExecute" Command="Delete" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding
+            Command="Open"
+            Key="O"
+            Modifiers="Control" />
+        <KeyBinding
+            Command="SaveAs"
+            Key="S"
+            Modifiers="Control" />
+        <KeyBinding
+            Command="Replace"
+            Key="R"
+            Modifiers="Control" />
+        <KeyBinding
+            Command="MoveToEnd"
+            Key="A"
+            Modifiers="Alt" />
+    </Window.InputBindings>
+    <StackPanel>
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Список">
+                <MenuItem
+                    Command="Open"
+                    Header="Зчитати список бійців з файлу"
+                    InputGestureText="Ctrl+O"
+                    x:Name="MiReadFromFile">
+                    <MenuItem.Icon>
+                        <Image Source="https://cdn-icons-png.flaticon.com/512/28/28947.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Command="SaveAs"
+                    Header="Зберегти список у файл"
+                    InputGestureText="Ctrl+S"
+                    x:Name="MiWriteToFile">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/13898481211537356036-64.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem
+                    Command="Replace"
+                    Header="Посортувати список бійців за званням"
+                    InputGestureText="Ctrl+R"
+                    x:Name="MiSortByRank">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/3755052181551940363-512.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem
+                    Command="MoveToEnd"
+                    Header="Додати бійця"
+                    InputGestureText="Alt+A"
+                    x:Name="MiAddWarrior">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/4413922431556277115-512.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Показати">
+                <MenuItem
+                    Click="Mi1_OnClick"
+                    Header="Бійців, які мають більше однієї одиниці зброї"
+                    x:Name="MiShowList1">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/13992501061586787986-64.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="Mi2_OnClick"
+                    Header="Бійців, які мають АК-47 і гранатомет"
+                    x:Name="MiShowList2">
+                    <MenuItem.Icon>
+                        <Image Source="https://cdn-icons-png.flaticon.com/512/4624/4624654.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="Mi3_OnClick"
+                    Header="Бійців, які мають  пістолет і будь-який автомат"
+                    x:Name="MiShowList3">
+                    <MenuItem.Icon>
+                        <Image Source="https://cdn-icons-png.flaticon.com/512/5904/5904339.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="Mi4_OnClick"
+                    Header="Бійців, які мають першу групу крові резус мінус або четверту групу резус плюс, віком до 25 років"
+                    x:Name="MiShowList4">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/412352016267751753660-512.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="Mi5_OnClick"
+                    Header="Солдат віком до 20 років без боєкомплекту"
+                    x:Name="MiShowList5">
+                    <MenuItem.Icon>
+                        <Image Source="https://cdn-icons-png.flaticon.com/512/843/843320.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="Mi6_OnClick"
+                    Header="Донорів для кожної групи крові"
+                    x:Name="MiShowList6">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/20373894561636182000-64.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Порахувати">
+                <MenuItem Click="CountAmmunition_OnClick" Header="Кількість озброєння">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/premium/bullets-gun-shoot-weapons-icon-631403-256.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Click="CountAverageAge_OnClick" Header="Середній вік">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/13298863031642010115-64.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Довідка">
+                <MenuItem
+                    Click="MiInstruction_OnClick"
+                    Header="Пояснення"
+                    x:Name="miInstruction">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/18432753721649921954-512.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="MiAboutCreator_OnClick"
+                    Header="Про розробника"
+                    x:Name="miAboutCreator">
+                    <MenuItem.Icon>
+                        <Image Source="https://pics.freeicons.io/uploads/icons/png/17237508451558096330-512.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Height="30">
+            <ToolBar Height="30">
+                <Button Command="Open" ToolTip="Зчитати список бійців з файлу">
+                    <Image Source="https://cdn-icons-png.flaticon.com/512/28/28947.png" />
+                </Button>
+                <Button Command="SaveAs" ToolTip="Зберегти список бійців до файлу">
+                    <Image Source="https://pics.freeicons.io/uploads/icons/png/13898481211537356036-64.png" />
+                </Button>
+                <Separator />
+                <Button Command="Replace" ToolTip="Посортувати список бійців за званням">
+                    <Image Source="https://pics.freeicons.io/uploads/icons/png/3755052181551940363-512.png" />
+                </Button>
+                <Separator />
+                <Button Command="MoveToEnd" ToolTip="Додати нового бійця до списку">
+                    <Image Source="https://pics.freeicons.io/uploads/icons/png/4413922431556277115-512.png" />
+                </Button>
+                <Separator />
+                <Button Click="MiInstruction_OnClick" ToolTip="Пояснення до таблиці">
+                    <Image Source="https://pics.freeicons.io/uploads/icons/png/18432753721649921954-512.png" />
+                </Button>
+            </ToolBar>
+
+        </ToolBarTray>
+        <DataGrid
+            AutoGenerateColumns="False"
+            Background="Khaki"
+            CanUserAddRows="False"
+            CanUserDeleteRows="True"
+            FontSize="15"
+            FontStyle="Italic"
+            Height="400"
+            IsReadOnly="False"
+            LoadingRow="Table_OnLoadingRow"
+            Margin="10,10,10,0"
+            RowBackground="Khaki"
+            Width="960"
+            x:Name="Table">
+            <DataGrid.ContextMenu>
+                <ContextMenu FontStyle="Italic">
+                    <MenuItem Command="Copy" Header="Скопіювати бійця ">
+                        <MenuItem.Icon>
+                            <Image Source="https://pics.freeicons.io/uploads/icons/png/10309421701582807614-512.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="MoveToEnd" Header="Вставити бійця в кінець">
+                        <MenuItem.Icon>
+                            <Image Source="https://pics.freeicons.io/uploads/icons/png/4413922431556277115-512.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Command="Delete"
+                        Header="Видалити бійця"
+                        x:Name="DeleteWarrior">
+                        <MenuItem.Icon>
+                            <Image Source="https://pics.freeicons.io/uploads/icons/png/19969543341557740370-512.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="SelectAll" Header="Bиділити всіх бійців">
+                        <MenuItem.Icon>
+                            <Image Source="https://pics.freeicons.io/uploads/icons/png/11072711961556258238-512.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="DarkOliveGreen" />
+                    <Setter Property="FontWeight" Value="DemiBold" />
+                    <Setter Property="BorderThickness" Value="0,0,1,2" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="Foreground" Value="Khaki" />
+                </Style>
+
+            </DataGrid.Resources>
+            <DataGrid.RowHeaderStyle>
+                <Style>
+                    <Setter Property="Control.Background" Value="DarkOliveGreen" />
+                    <Setter Property="Control.BorderBrush" Value="Black" />
+                    <Setter Property="Control.FontWeight" Value="DemiBold" />
+                    <Setter Property="Control.Foreground" Value="Khaki" />
+                    <Setter Property="Control.BorderThickness" Value="0,0,1,2" />
+                </Style>
+            </DataGrid.RowHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding Path=Surname, UpdateSourceTrigger=PropertyChanged}"
+                    Header=" Прізвище"
+                    Width="150" />
+                <DataGridTextColumn
+                    Binding="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                    Header=" Ім'я"
+                    Width="150" />
+                <DataGridTextColumn
+                    Binding="{Binding Path=Age, UpdateSourceTrigger=PropertyChanged}"
+                    Header=" Вік"
+                    Width="50" />
+                <DataGridTextColumn
+                    Binding="{Binding Path=BloodGroupAsString, UpdateSourceTrigger=PropertyChanged}"
+                    CanUserSort="False"
+                    Width="100">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text=" Група крові">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock>
+                                        O - I<LineBreak />
+                                        A - II<LineBreak />
+                                        B - III<LineBreak />
+                                        AB - IV<LineBreak />
+                                        Резус фактори: + та -</TextBlock>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn
+                    Binding="{Binding Path=Rank, UpdateSourceTrigger=PropertyChanged}"
+                    Header=" Звання"
+                    Width="150" />
+                <DataGridTextColumn
+                    Binding="{Binding Path=AmmunitionListAsString}"
+                    CanUserSort="False"
+                    Header=" Боєкомплект"
+                    Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StatusBar Height="25" Margin="0,10,0,0">
+            <StatusBarItem>
+                <TextBlock Width="300" x:Name="statusBar" />
+            </StatusBarItem>
+        </StatusBar>
+    </StackPanel>
+</Window>
